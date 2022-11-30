@@ -19,9 +19,23 @@ const getStyleLoaders = (pre) => {
       loader:'css-loader',
       options: {
         modules: {
+          mode: (resourcePath) => {
+            if (/pure\.(less|css)$/i.test(resourcePath)) {
+              return 'pure'
+            }
+
+            if (/(global)\.(less|css)$/i.test(resourcePath)) {
+              return 'global'
+            }
+
+            if (/antd/i.test(resourcePath)) {
+              return 'global'
+            }
+
+            return 'local'
+          },
             localIdentName: "[local]__[hash:base64:5]",
             exportLocalsConvention: "camelCase",
-
           }
       },
     },
