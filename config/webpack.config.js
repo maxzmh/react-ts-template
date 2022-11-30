@@ -15,7 +15,16 @@ const isProduction = process.env.NODE_ENV === "production";
 const getStyleLoaders = (pre) => {
   return [
     isProduction ? MiniCssExtractPlugin.loader : "style-loader",
-    "css-loader",
+    {
+      loader:'css-loader',
+      options: {
+        modules: {
+            localIdentName: "[local]__[hash:base64:5]",
+            exportLocalsConvention: "camelCase",
+
+          }
+      },
+    },
     {
       // 处理css兼容性问题
       // 配合package.json中browserslist来指定兼容性
